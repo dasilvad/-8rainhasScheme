@@ -1,11 +1,8 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
 #reader(lib "htdp-advanced-reader.ss" "lang")((modname 8rainhasBackTracking) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #t #t none #f ())))
+(require racket/list)
 
-; colunas[9];
-;posicao[9];
-; diagonalPrincipal[15];
-; diagonalSecundaria[15];
  
  ;Uma rainha e uma de:
    ;(make-rainha (make-list 8 number) (make-list 8 number) (make-list 15 number) (make-list 15 number)) 
@@ -66,15 +63,17 @@
    )
 )
 
-(define (imprimir solucao)
+(define (imprimir solucao linha)
   (cond
     [(empty? solucao) (newline)]
     [else
-    (begin (display (first solucao))
-           
-       (display " " )
-       (imprimir (rest solucao))
-       
+    (begin 
+       (display "Linha: " )
+       (display linha )
+       (display "  Coluna: " )
+       (display  (first solucao)) 
+       (newline)
+       (imprimir (rest solucao) (+ linha 1))  
     )
      ]
   )
@@ -84,24 +83,19 @@
   (cond 
     [(> coluna 8) empty]
     [(<= linha 8)
-        
-         (begin
-           (cond
+         (begin 
+                (append (posicionarRainha linha (+ coluna 1) rainha) (cond
              [(equal?  (posicaoValida linha coluna rainha) true) 
-              (posicionarRainha (+ linha 1)  1  (criarNovaRainha linha coluna rainha))
-              ]
-             [else rainha]
-            )
-             
-            (posicionarRainha linha (+ coluna 1) rainha)
-            
-         )    
+                 (posicionarRainha (+ linha 1)  1  (criarNovaRainha linha coluna rainha))
+             ]
+             [else empty]
+            ))
+            )   
     ]                
-    [else
-        (imprimir (rainha-solucao rainha))
-       
+    [else 
+        (rainha-solucao rainha)
     ] 
-  ) 
+  )  
 ) 
  
-(posicionarRainha 1 1 (inicializarListas))
+(imprimir (take-right (posicionarRainha 1 1 (inicializarListas)) 8)  1)
