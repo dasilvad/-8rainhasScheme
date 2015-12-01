@@ -3,9 +3,9 @@
 #reader(lib "htdp-advanced-reader.ss" "lang")((modname 8rainhasBackTracking) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #t #t none #f ())))
 (require racket/list)
 
- 
  ;Uma rainha e uma de:
    ;(make-rainha (make-list 8 number) (make-list 8 number) (make-list 15 number) (make-list 15 number)) 
+
 (define-struct rainha (colunas solucao dP dS))
 
 (define linhaPrimeiraRainha 1);a primeira rainha vai na linha linhaPrimeiraRainha e coluna 0
@@ -96,6 +96,6 @@
         (rainha-solucao rainha)
     ] 
   )  
-) 
+)  
  
 (imprimir (take-right (posicionarRainha 1 1 (inicializarListas)) 8)  1)
